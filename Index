@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Access</title>
+    <style>
+        body {
+            background-color: #0D0D0D;
+            color: white;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            margin: 0;
+        }
+        input {
+            font-style: normal;
+            padding: 10px;
+            background-color: #101010;
+            border: 2px solid #181818;
+            border-radius: 10px;
+            color: white;
+            width: 250px;
+            text-align: center;
+            display: block;
+            margin: 10px auto;
+        }
+        button {
+            padding: 10px 105px;
+            background-color: #5865F2;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            display: block;
+            margin: 0px auto;
+        }
+        button:hover {
+            background-color: #4752C4;
+        }
+
+        .top-right-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #141414;
+            border: 2px solid #181818;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 999;
+        }
+        .top-right-button:hover {
+            background-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top-right Button -->
+    <a href="Login" class="top-right-button">Login</a>
+
+    <label for="requestBox">Request Access Below</label>
+    <input type="text" id="requestBox" placeholder="Full Name">
+    <button id="requestButton">Request</button>
+
+    <script>
+        document.getElementById("requestButton").addEventListener("click", function () {
+            const requestMessage = document.getElementById("requestBox").value.trim();
+
+            if (requestMessage === "") {
+                alert("Please enter a request before submitting.");
+                return;
+            }
+
+            // Send request to the bot via an API
+            fetch("https://discord.com/oauth2/authorize?client_id=1376865001641607168&permissions=2147510272&integration_type=0&scope=bot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: requestMessage })
+            }).then(response => {
+                if (response.ok) {
+                    alert("Request sent successfully!");
+                    document.getElementById("requestBox").value = "";
+                } else {
+                    alert("Failed to send request.");
+                }
+            }).catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred.");
+            });
+        });
+    </script>
+</body>
+</html>
