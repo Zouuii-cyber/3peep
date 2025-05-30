@@ -12,506 +12,1199 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0D0D0D;
-            color: white;
-            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: auto;
+            position: relative;
         }
 
-        .navbar {
-            background-color: #1a1a1a;
-            padding: 1rem 2rem;
+        /* Animated background particles */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(79, 172, 254, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .particle:nth-child(1) { width: 6px; height: 6px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 8px; height: 8px; left: 20%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 4px; height: 4px; left: 30%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 10px; height: 10px; left: 40%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 5px; height: 5px; left: 50%; animation-delay: 8s; }
+        .particle:nth-child(6) { width: 7px; height: 7px; left: 60%; animation-delay: 10s; }
+        .particle:nth-child(7) { width: 6px; height: 6px; left: 70%; animation-delay: 12s; }
+        .particle:nth-child(8) { width: 9px; height: 9px; left: 80%; animation-delay: 14s; }
+        .particle:nth-child(9) { width: 5px; height: 5px; left: 90%; animation-delay: 16s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            animation: slideInLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 12px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .logo p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 500;
+            gap: 12px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .nav-icon {
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 24px;
+            animation: slideInRight 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #333;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .navbar h1 {
-            color: #5865F2;
-            font-size: 1.5rem;
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(79, 172, 254, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .stat-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: #4facfe;
+            font-weight: 500;
+        }
+
+        /* User Management Section */
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .search-bar {
+            position: relative;
+            max-width: 300px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-bar input:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #4facfe;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .search-bar::before {
+            content: 'Search';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* User Table */
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .user-table td {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .user-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
-        }
-
-        .logout-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .logout-btn:hover {
-            background-color: #c82333;
-        }
-
-        .container {
-            display: flex;
-            height: calc(100vh - 80px);
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #1a1a1a;
-            padding: 2rem 1rem;
-            border-right: 1px solid #333;
-        }
-
-        .sidebar ul {
-            list-style: none;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 1rem;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1rem;
-            display: block;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar ul li a:hover,
-        .sidebar ul li a.active {
-            background-color: #5865F2;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 2rem;
-            overflow-y: auto;
-        }
-
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background-color: #1a1a1a;
-            padding: 1.5rem;
-            border-radius: 10px;
-            border: 1px solid #333;
-        }
-
-        .card h3 {
-            color: #5865F2;
-            margin-bottom: 1rem;
-        }
-
-        .card .number {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .user-management {
-            background-color: #1a1a1a;
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid #333;
-        }
-
-        .user-management h2 {
-            margin-bottom: 1.5rem;
-            color: #5865F2;
-        }
-
-        .add-user-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background-color: #0D0D0D;
-            border-radius: 8px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 0.5rem;
-            color: #ccc;
-        }
-
-        .form-group input, .form-group select {
-            padding: 0.75rem;
-            background-color: #333;
-            border: 1px solid #555;
-            border-radius: 5px;
-            color: white;
-        }
-
-        .add-user-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-
-        .add-user-btn:hover {
-            background-color: #218838;
-        }
-
-        .users-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
-
-        .users-table th {
-            background-color: #0D0D0D;
-            color: #5865F2;
-        }
-
-        .users-table tr:hover {
-            background-color: #222;
-        }
-
-        .delete-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .delete-btn:hover {
-            background-color: #c82333;
+            gap: 12px;
         }
 
         .status-badge {
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
         }
 
         .status-active {
-            background-color: #28a745;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .status-inactive {
-            background-color: #6c757d;
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
-        .hidden {
+        .status-pending {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .action-btn.edit {
+            background: rgba(79, 172, 254, 0.8);
+        }
+
+        .action-btn.delete {
+            background: rgba(239, 68, 68, 0.8);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal */
+        .modal {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #4facfe;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .user-table {
+                font-size: 12px;
+            }
+
+            .user-table th,
+            .user-table td {
+                padding: 12px 8px;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <h1>Admin Dashboard</h1>
-        <div class="user-info">
-            <span>Welcome, <strong id="adminName">Super Admin</strong></span>
-            <button class="logout-btn" onclick="logout()">Logout</button>
-        </div>
-    </nav>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
 
-    <div class="container">
-        <aside class="sidebar">
-            <ul>
-                <li><a href="#" class="nav-link active" data-section="dashboard">Dashboard</a></li>
-                <li><a href="#" class="nav-link" data-section="users">User Management</a></li>
-                <li><a href="#" class="nav-link" data-section="settings">Settings</a></li>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <h1>Admin Panel</h1>
+                <p>Management Dashboard</p>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                        <span class="nav-icon"></span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#users" class="nav-link" onclick="showSection('users')">
+                        <span class="nav-icon"></span>
+                        User Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link" onclick="showSection('settings')">
+                        <span class="nav-icon"></span>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#analytics" class="nav-link" onclick="showSection('analytics')">
+                        <span class="nav-icon"></span>
+                        Analytics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#security" class="nav-link" onclick="showSection('security')">
+                        <span class="nav-icon"></span>
+                        Security
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reports" class="nav-link" onclick="showSection('reports')">
+                        <span class="nav-icon"></span>
+                        Reports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#logout" class="nav-link" onclick="handleLogout()">
+                        <span class="nav-icon"></span>
+                        Logout
+                    </a>
+                </li>
             </ul>
-        </aside>
+        </nav>
 
+        <!-- Main Content -->
         <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1 id="section-title">Dashboard Overview</h1>
+                <div class="header-actions">
+                    <button class="btn" onclick="refreshData()">
+                        <span>↻</span>
+                        Refresh
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal('createUser')">
+                        <span>+</span>
+                        Add User
+                    </button>
+                </div>
+            </header>
+
             <!-- Dashboard Section -->
-            <div id="dashboard" class="section">
-                <h2>Dashboard Overview</h2>
-                <div class="dashboard-cards">
-                    <div class="card">
-                        <h3>Total Users</h3>
-                        <div class="number" id="totalUsers">0</div>
-                        <p>Registered accounts</p>
+            <div id="dashboard-section" class="section-content">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Total Users</span>
+                        </div>
+                        <div class="stat-value">1</div>
+                        <div class="stat-change">Not rated</div>
                     </div>
-                    <div class="card">
-                        <h3>Active Users</h3>
-                        <div class="number" id="activeUsers">0</div>
-                        <p>Currently active</p>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Active Sessions</span>
+                        </div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-change">Not rated</div>
                     </div>
-                    <div class="card">
-                        <h3>Pending Requests</h3>
-                        <div class="number" id="pendingRequests">0</div>
-                        <p>Awaiting approval</p>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Pending Requests</span>
+                        </div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-change">Not rated</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">System Health</span>
+                        </div>
+                        <div class="stat-value">- undefined -</div>
+                        <div class="stat-change">Not rated
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Activity</h2>
+                    </div>
+                    <div class="activity-list">
+                        <div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">
+                            Recent user activities and system events will appear here...
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- User Management Section -->
-            <div id="users" class="section hidden">
-                <div class="user-management">
-                    <h2>User Management</h2>
-                    
-                    <div class="add-user-form">
-                        <div class="form-group">
-                            <label for="userName">Full Name</label>
-                            <input type="text" id="userName" placeholder="Enter full name">
-                        </div>
-                        <div class="form-group">
-                            <label for="userUsername">Username</label>
-                            <input type="text" id="userUsername" placeholder="Enter username">
-                        </div>
-                        <div class="form-group">
-                            <label for="userPassword">Password</label>
-                            <input type="password" id="userPassword" placeholder="Enter password">
-                        </div>
-                        <div class="form-group">
-                            <label for="userRole">Role</label>
-                            <select id="userRole">
-                                <option value="user">User</option>
-                                <option value="moderator">Moderator</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="userStatus">Status</label>
-                            <select id="userStatus">
-                                <option value="active">Active</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button class="add-user-btn" onclick="addUser()">Add User</button>
+            <div id="users-section" class="section-content" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">User Management</h2>
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search users..." onkeyup="searchUsers(this.value)">
                         </div>
                     </div>
-
-                    <table class="users-table">
+                    
+                    <table class="user-table" id="userTable">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Username</th>
+                                <th>User</th>
+                                <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Created</th>
+                                <th>Last Login</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="usersTableBody">
-                            <!-- Users will be populated here -->
+                        <tbody id="userTableBody">
+                            <!-- Users will be populated by JavaScript -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Settings Section -->
-            <div id="settings" class="section hidden">
-                <div class="card">
-                    <h2>System Settings</h2>
-                    <p>Configure system preferences and security settings.</p>
-                    <p><strong>Current Admin:</strong> Super Admin (You)</p>
-                    <p><strong>System Version:</strong> 1.0.0</p>
+            <div id="settings-section" class="section-content" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">System Settings</h2>
+                    </div>
+                    <div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">
+                        System configuration options will be available here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics-section" class="section-content" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Analytics & Reports</h2>
+                    </div>
+                    <div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">
+                        User analytics and detailed reports will be displayed here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Section -->
+            <div id="security-section" class="section-content" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">Security Management</h2>
+                    </div>
+                    <div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">
+                        Security settings and access controls will be managed here...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports-section" class="section-content" style="display: none;">
+                <div class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">System Reports</h2>
+                    </div>
+                    <div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.7);">
+                        Generate and download system reports here...
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- Create/Edit User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Create New User</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="userName">Full Name</label>
+                    <input type="text" id="userName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userEmail">Email Address</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userRole">Role</label>
+                    <select id="userRole" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Administrator</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="user">User</option>
+                        <option value="guest">Guest</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userStatus">Status</label>
+                    <select id="userStatus" required>
+                        <option value="">Select Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Simulated user data - In real app, this would come from your backend
+        // Sample user data
         let users = [
-            ,{
+            {
                 id: 1,
-                name: "Flynn Bell",
-                username: "Iamokru",
-                password: "Flynn1234",
-                role: "admin",
-                status: "active",
-                created: "2025-05-29",
-            },
-            ,{
-                id: 2,
                 name: "Zac Fowler",
-                username: "Zouuii",
-                password: "EpXCH5FCENpb",
-                role: "admin",
+                email: "fzac95195@gmail.com",
+                role: "Owner",
                 status: "active",
-                created: "2025-05-29",
-            }
-            ,{
-                id: 3,
-                name: "Jake Bungo",
-                username: "Jakebungo",
-                password: "jake1234",
-                role: "admin",
-                status: "active",
-                created: "2025-05-29",
-            }
+                lastLogin: "Hidden",
+                avatar: "ZF"
+            },
         ];
 
-        // Check if user is super admin (in real app, this would be server-side)
-        function checkAdminAccess() {
-            const currentUser = getCurrentUser(); // You'd implement this
-            if (currentUser !== "superadmin") {
-                alert("Access denied. Only the super admin can access this dashboard.");
-                window.location.href = "login.html";
-                return false;
-            }
-            return true;
-        }
-
-        // Simulate getting current user - replace with real authentication
-        function getCurrentUser() {
-            // In a real app, this would check JWT token or session
-            return "superadmin"; // Hardcoded for demo
-        }
-
-        // Navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all links
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Hide all sections
-                document.querySelectorAll('.section').forEach(section => section.classList.add('hidden'));
-                // Show selected section
-                const targetSection = this.getAttribute('data-section');
-                document.getElementById(targetSection).classList.remove('hidden');
-            });
-        });
-
-        // Add new user
-        function addUser() {
-            const name = document.getElementById('userName').value.trim();
-            const username = document.getElementById('userUsername').value.trim();
-            const password = document.getElementById('userPassword').value.trim();
-            const role = document.getElementById('userRole').value;
-            const status = document.getElementById('userStatus').value;
-
-            if (!name || !username || !password) {
-                alert('Please fill in all required fields');
-                return;
-            }
-
-            // Check if username already exists
-            if (users.find(user => user.username === username)) {
-                alert('User with this username already exists');
-                return;
-            }
-
-            // Basic password validation
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters long');
-                return;
-            }
-
-            const newUser = {
-                id: users.length + 1,
-                name: name,
-                username: username,
-                password: password, // In real app, hash this before storing
-                role: role,
-                status: status,
-                created: new Date().toISOString().split('T')[0]
-            };
-
-            users.push(newUser);
-            
-            // In a real app, you'd send this to your backend:
-            // fetch('/api/users', { method: 'POST', body: JSON.stringify(newUser) })
-
-            // Clear form
-            document.getElementById('userName').value = '';
-            document.getElementById('userUsername').value = '';
-            document.getElementById('userPassword').value = '';
-            document.getElementById('userRole').value = 'user';
-            document.getElementById('userStatus').value = 'active';
-
-            renderUsers();
-            updateDashboardStats();
-            alert('User added successfully!');
-        }
-
-        // Delete user
-        function deleteUser(userId) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                users = users.filter(user => user.id !== userId);
-                
-                // In a real app: fetch(`/api/users/${userId}`, { method: 'DELETE' })
-                
-                renderUsers();
-                updateDashboardStats();
-            }
-        }
-
-        // Render users table
-        function renderUsers() {
-            const tbody = document.getElementById('usersTableBody');
-            tbody.innerHTML = '';
-
-            users.forEach(user => {
-                const row = `
-                    <tr>
-                        <td>${user.name}</td>
-                        <td>${user.username}</td>
-                        <td>${user.role}</td>
-                        <td><span class="status-badge status-${user.status}">${user.status}</span></td>
-                        <td>${user.created}</td>
-                        <td>
-                            <button class="delete-btn" onclick="deleteUser(${user.id})">Delete</button>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-        }
-
-        // Update dashboard statistics
-        function updateDashboardStats() {
-            document.getElementById('totalUsers').textContent = users.length;
-            document.getElementById('activeUsers').textContent = users.filter(u => u.status === 'active').length;
-            document.getElementById('pendingRequests').textContent = '0'; // You'd get this from your backend
-        }
-
-        // Logout function
-        function logout() {
-            if (confirm('Are you sure you want to logout?')) {
-                // Clear session/token in real app
-                window.location.href = 'Login';
-            }
-        }
+        let currentEditingUser = null;
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            // Check admin access (in real app)
-            // checkAdminAccess();
-            
-            renderUsers();
-            updateDashboardStats();
+            showSection('dashboard');
+            populateUserTable();
         });
+
+        // Navigation functions
+        function showSection(sectionName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(section => section.style.display = 'none');
+            
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // Add active class to selected nav link
+            const activeLink = document.querySelector(`[onclick="showSection('${sectionName}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Update section title
+            const titleMap = {
+                'dashboard': 'Dashboard Overview',
+                'users': 'User Management',
+                'settings': 'System Settings',
+                'analytics': 'Analytics & Reports',
+                'security': 'Security Management',
+                'reports': 'System Reports'
+            };
+            
+            document.getElementById('section-title').textContent = titleMap[sectionName] || 'Dashboard';
+        }
+
+        // User management functions
+        function populateUserTable() {
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">${user.avatar}</div>
+                            <span>${user.name}</span>
+                        </div>
+                    </td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <span class="status-badge status-${user.status}">
+                            ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                        </span>
+                    </td>
+                    <td>${user.lastLogin}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit" onclick="editUser(${user.id})">Edit</button>
+                            <button class="action-btn delete" onclick="deleteUser(${user.id})">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function searchUsers(query) {
+            const filteredUsers = users.filter(user => 
+                user.name.toLowerCase().includes(query.toLowerCase()) ||
+                user.email.toLowerCase().includes(query.toLowerCase()) ||
+                user.role.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+            
+            filteredUsers.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">${user.avatar}</div>
+                            <span>${user.name}</span>
+                        </div>
+                    </td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <span class="status-badge status-${user.status}">
+                            ${user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                        </span>
+                    </td>
+                    <td>${user.lastLogin}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit" onclick="editUser(${user.id})">Edit</button>
+                            <button class="action-btn delete" onclick="deleteUser(${user.id})">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Modal functions
+        function openModal(type, userId = null) {
+            const modal = document.getElementById('userModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const form = document.getElementById('userForm');
+            
+            currentEditingUser = userId;
+            
+            if (type === 'createUser') {
+                modalTitle.textContent = 'Create New User';
+                form.reset();
+            } else if (type === 'editUser' && userId) {
+                modalTitle.textContent = 'Edit User';
+                const user = users.find(u => u.id === userId);
+                if (user) {
+                    document.getElementById('userName').value = user.name;
+                    document.getElementById('userEmail').value = user.email;
+                    document.getElementById('userRole').value = user.role.toLowerCase();
+                    document.getElementById('userStatus').value = user.status;
+                }
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('userModal');
+            modal.classList.remove('active');
+            currentEditingUser = null;
+        }
+
+        function editUser(userId) {
+            openModal('editUser', userId);
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                users = users.filter(user => user.id !== userId);
+                populateUserTable();
+                showNotification('User deleted successfully', 'success');
+            }
+        }
+
+        // Form submission
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const role = document.getElementById('userRole').value;
+            const status = document.getElementById('userStatus').value;
+            
+            if (currentEditingUser) {
+                // Edit existing user
+                const userIndex = users.findIndex(u => u.id === currentEditingUser);
+                if (userIndex !== -1) {
+                    users[userIndex] = {
+                        ...users[userIndex],
+                        name: name,
+                        email: email,
+                        role: role.charAt(0).toUpperCase() + role.slice(1),
+                        status: status
+                    };
+                    showNotification('User updated successfully', 'success');
+                }
+            } else {
+                // Create new user
+                const newUser = {
+                    id: Math.max(...users.map(u => u.id)) + 1,
+                    name: name,
+                    email: email,
+                    role: role.charAt(0).toUpperCase() + role.slice(1),
+                    status: status,
+                    lastLogin: 'Never',
+                    avatar: name.split(' ').map(n => n[0]).join('').toUpperCase()
+                };
+                users.push(newUser);
+                showNotification('User created successfully', 'success');
+            }
+            
+            populateUserTable();
+            closeModal();
+        });
+
+        // Utility functions
+        function refreshData() {
+            showNotification('Data refreshed successfully', 'info');
+            populateUserTable();
+        }
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                showNotification('Logging out...', 'info');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'rgba(34, 197, 94, 0.9)' : 
+                            type === 'error' ? 'rgba(239, 68, 68, 0.9)' : 
+                            'rgba(79, 172, 254, 0.9)'};
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                font-weight: 500;
+                max-width: 300px;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('userModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Add ripple effect to buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('button') || e.target.matches('.btn')) {
+                const button = e.target;
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(255, 255, 255, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                button.style.position = 'relative';
+                button.style.overflow = 'hidden';
+                button.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            }
+        });
+
+        // Add CSS for ripple animation
+        const rippleStyle = document.createElement('style');
+        rippleStyle.textContent = `
+            @keyframes ripple {
+                to { transform: scale(4); opacity: 0; }
+            }
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(rippleStyle);
     </script>
 </body>
 </html>
